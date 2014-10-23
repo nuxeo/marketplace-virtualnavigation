@@ -16,6 +16,7 @@
   <modules>
     <module>marketplace</module>
     <module>ftest/webdriver</module>
+    <module>ftest/selenium</module>
   </modules>
 
   <repositories>
