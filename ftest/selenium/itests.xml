@@ -16,7 +16,7 @@
   <property name="mp.install" value="file:${out.dir}/marketplace-${maven.project.version}.zip" />
   <target name="prepare-environment" depends="_init,prepare-db,prepare-tomcat,prepare-jboss">
     <copy todir="${out.dir}">
-      <artifact:resolveFile key="org.nuxeo.marketplace.virtualnavigation:marketplace::zip" />
+      <artifact:file key="org.nuxeo.marketplace.virtualnavigation:marketplace::zip" />
     </copy>
   </target>
   <target name="run-selenium-tests" depends="run-selenium" />

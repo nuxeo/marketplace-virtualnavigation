@@ -17,24 +17,18 @@
     <some.password>setTheValueInYourSettings</some.password>
   </properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.nuxeo.marketplace.virtualnavigation</groupId>
-        <artifactId>marketplace</artifactId>
-        <version>${project.version}</version>
-        <type>zip</type>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <dependencies>
+    <dependency>
+      <groupId>org.nuxeo.marketplace.virtualnavigation</groupId>
+      <artifactId>marketplace</artifactId>
+      <type>zip</type>
+    </dependency>
     <dependency>
       <groupId>org.nuxeo.ecm.distribution</groupId>
       <artifactId>nuxeo-distribution-tomcat</artifactId>
       <classifier>nuxeo-cap</classifier>
       <type>zip</type>
-      <scope>provided</scope>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
