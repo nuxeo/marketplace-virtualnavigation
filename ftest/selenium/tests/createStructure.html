@@ -127,24 +127,29 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Manage</td>
+	<td>link=Permissions</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Access Rights</td>
+	<td>waitForTextPresent</td>
+	<td>New Permission</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//paper-button[text()='New Permission']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Add a Permission</td>
 	<td></td>
 </tr>
 <!--Administrator donne a jdoe droits d'ecriture-->
 <tr>
 	<td>select2Type</td>
-	<td>css=div[id$='nxw_selection_select2']</td>
+	<td>css=div[id$='s2id_select2']</td>
 	<td>jdoe</td>
-</tr>
-<tr>
-	<td>waitForSelect2</td>
-	<td>10000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -152,24 +157,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>id=add_rights_form:rights_permission_select</td>
-	<td>label=Edit</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>id=add_rights_form:rights_add_button</td>
-	<td></td>
-</tr>
-<!--verify that the button to save local rights modification is displayed-->
-<tr>
-	<td>verifyElementPresent</td>
-	<td>//input[@value='Save Local Rights']</td>
+	<td>click</td>
+	<td>//h2[text()='Add a Permission']/..//paper-item[text()='Edit']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Save Local Rights']</td>
+	<td>click</td>
+	<td>//h2[text()='Add a Permission']/..//paper-button[text()='Create']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextNotPresent</td>
+	<td>Add a Permission</td>
 	<td></td>
 </tr>
 <!--Déconnexion-->
