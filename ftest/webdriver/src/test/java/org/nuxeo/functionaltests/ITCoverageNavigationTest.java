@@ -12,11 +12,9 @@
  * Lesser General Public License for more details.
  *
  * Contributors:
- *     Nuxeo
+ *     Yannis JULIENNE
  */
 package org.nuxeo.functionaltests;
-
-import static org.nuxeo.functionaltests.Constants.*;
 
 import java.io.IOException;
 
@@ -25,7 +23,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.nuxeo.functionaltests.forms.Select2WidgetElement;
 import org.nuxeo.functionaltests.pages.DocumentBasePage;
+import org.nuxeo.functionaltests.pages.DocumentBasePage.UserNotConnectedException;
 import org.nuxeo.functionaltests.pages.NoteDocumentBasePage;
+import org.nuxeo.functionaltests.pages.forms.NoteCreationFormPage;
+import org.nuxeo.functionaltests.pages.forms.WorkspaceFormPage;
 import org.nuxeo.functionaltests.pages.tabs.EditTabSubPage;
 import org.openqa.selenium.By;
 
@@ -34,24 +35,39 @@ import org.openqa.selenium.By;
  */
 public class ITCoverageNavigationTest extends AbstractTest {
 
+    public static final String NXPATH_URL_FORMAT = "/nxpath/default%s@view_documents";
+
+    public static final String WORKSPACES_TITLE = "Workspaces";
+
+    public static final String WORKSPACES_PATH = "/default-domain/workspaces/";
+
+    public static final String WORKSPACE_TYPE = "Workspace";
+
     public static final String TEST_WORKSPACE_TITLE = "ws";
 
-    public static final String TEST_WORKSPACE_PATH = Constants.WORKSPACES_PATH + TEST_WORKSPACE_TITLE + "/";
+    public static final String TEST_WORKSPACE_PATH = WORKSPACES_PATH + TEST_WORKSPACE_TITLE + "/";
 
-    public static final String TEST_WORKSPACE_URL = String.format(Constants.NXPATH_URL_FORMAT, TEST_WORKSPACE_PATH);
+    public static final String TEST_WORKSPACE_URL = String.format(NXPATH_URL_FORMAT, TEST_WORKSPACE_PATH);
 
-    protected final static String NOTE_TITLE = "Note with coverage";
+    public final static String NOTE_TITLE = "Note with coverage";
 
-    protected final static String NOTE_DESCRIPTION = "Description of note with coverage";
+    public final static String NOTE_TYPE = "Note";
+
+    public final static String NOTE_DESCRIPTION = "Description of note with coverage";
 
     @Before
-    public void before() {
-        RestHelper.createDocument(WORKSPACES_PATH, WORKSPACE_TYPE, TEST_WORKSPACE_TITLE, null);
+    public void before() throws UserNotConnectedException {
+        DocumentBasePage page = login();
+        page = page.getContentTab().goToDocument(WORKSPACES_TITLE);
+        WorkspaceFormPage formPage = page.getContentTab().getWorkspacesContentTab().getWorkspaceCreatePage();
+        formPage.createNewWorkspace(TEST_WORKSPACE_TITLE, "");
     }
 
     @After
-    public void after() {
-        RestHelper.cleanup();
+    public void after() throws UserNotConnectedException {
+        DocumentBasePage page = login();
+        page = page.getContentTab().goToDocument(WORKSPACES_TITLE);
+        page.getContentTab().removeAllDocuments();
     }
 
     @Test
@@ -68,15 +84,13 @@ public class ITCoverageNavigationTest extends AbstractTest {
 
         // check Africa is present and click
         Locator.waitUntilElementPresent(By.linkText("Africa"));
-        Locator.findElement(By
-                              .xpath("//div[@id='directoryTreeForm:directoryNavTree:directoryNavRecursiveAdaptor.0.directoryNavRecursiveAdaptor.0:directoryNavTreeNode']/div/span"))
-               .click();
+        Locator.findElement(By.xpath(
+                "//div[@id='directoryTreeForm:directoryNavTree:directoryNavRecursiveAdaptor.0.directoryNavRecursiveAdaptor.0:directoryNavTreeNode']/div/span")).click();
 
         // check Algeria is present and click
         Locator.waitUntilElementPresent(By.linkText("Algeria"));
-        Locator.findElement(
-                By.id("directoryTreeForm:directoryNavTree:directoryNavRecursiveAdaptor.0.directoryNavRecursiveAdaptor.0.directoryNavRecursiveAdaptor.0:directoryNavCommandLink"))
-               .click();
+        Locator.findElement(By.id(
+                "directoryTreeForm:directoryNavTree:directoryNavRecursiveAdaptor.0.directoryNavRecursiveAdaptor.0.directoryNavRecursiveAdaptor.0:directoryNavCommandLink")).click();
 
         // check Algeria Note is present
         Locator.waitForTextPresent(By.id("byCoverageContentView"), NOTE_TITLE);
@@ -85,11 +99,11 @@ public class ITCoverageNavigationTest extends AbstractTest {
     }
 
     protected void createNoteWithCoverage(String coverage) throws IOException {
-        open(TEST_WORKSPACE_URL);
-
         // create note
-        NoteDocumentBasePage noteDocumentBasePage = asPage(DocumentBasePage.class).createNote(NOTE_TITLE,
-                NOTE_DESCRIPTION, false, null);
+        NoteCreationFormPage formPage = get(NUXEO_URL+TEST_WORKSPACE_URL+"?conversationId=0NXMAIN", DocumentBasePage.class).getContentTab().getDocumentCreatePage(NOTE_TYPE,
+                NoteCreationFormPage.class);
+        NoteDocumentBasePage noteDocumentBasePage = formPage.createNoteDocument(NOTE_TITLE, NOTE_DESCRIPTION, false,
+                null);
 
         EditTabSubPage editTab = noteDocumentBasePage.getEditTab();
         // set coverage
