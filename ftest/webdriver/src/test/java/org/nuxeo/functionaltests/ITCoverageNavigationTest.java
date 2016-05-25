@@ -28,7 +28,7 @@ import org.nuxeo.functionaltests.pages.DocumentBasePage;
 import org.nuxeo.functionaltests.pages.DocumentBasePage.UserNotConnectedException;
 import org.nuxeo.functionaltests.pages.NoteDocumentBasePage;
 import org.nuxeo.functionaltests.pages.forms.NoteCreationFormPage;
-import org.nuxeo.functionaltests.pages.forms.WorkspaceFormPage;
+import org.nuxeo.functionaltests.pages.forms.WorkspaceCreationFormPage;
 import org.nuxeo.functionaltests.pages.tabs.EditTabSubPage;
 import org.openqa.selenium.By;
 
@@ -61,7 +61,7 @@ public class ITCoverageNavigationTest extends AbstractTest {
     public void before() throws UserNotConnectedException {
         DocumentBasePage page = login();
         page = page.getContentTab().goToDocument(WORKSPACES_TITLE);
-        WorkspaceFormPage formPage = page.getContentTab().getWorkspacesContentTab().getWorkspaceCreatePage();
+        WorkspaceCreationFormPage formPage = page.getContentTab().getWorkspacesContentTab().getWorkspaceCreatePage();
         formPage.createNewWorkspace(TEST_WORKSPACE_TITLE, "");
     }
 
