@@ -27,7 +27,8 @@
 
     <!-- Base distribution NXR -->
     <copy todir="${outdir}">
-      <artifact:file key="org.nuxeo.ecm.distribution:nuxeo-distribution-cap::zip" />
+      <artifact:file key="org.nuxeo.ecm.distribution:nuxeo-nxr-server::zip" />
+      <artifact:file key="org.nuxeo.ecm.distribution:nuxeo-nxr-jsf-ui::zip" />
     </copy>
 
     <!-- Nuxeo bundles -->
@@ -54,17 +55,23 @@
       </artifact:set>
     </copy>
     <nx:rmdups dir="${outdir}/nxr/lib" />
+
+    <unzip src="${outdir}/nuxeo-nxr-server-${nuxeo.distribution.version}.zip"
+           dest="${outdir}/nuxeo-nxr-server-jsf-ui" />
+    <unzip src="${outdir}/nuxeo-nxr-jsf-ui-${nuxeo.distribution.version}.zip"
+           dest="${outdir}/nuxeo-nxr-server-jsf-ui" />
+    <zip destfile="${outdir}/nuxeo-nxr-server-jsf-ui-${nuxeo.distribution.version}.zip"
+         basedir="${outdir}/nuxeo-nxr-server-jsf-ui" />
     <zip destfile="${outdir}/nxr-${maven.project.version}.zip" basedir="${outdir}/nxr" />
+    <!-- Diff against Nuxeo Server + JSF UI -->
     <nx:zipdiff file1="${outdir}/nxr-${maven.project.version}.zip"
-                file2="${outdir}/nuxeo-distribution-cap-${nuxeo.distribution.version}.zip"
+                file2="${outdir}/nuxeo-nxr-server-jsf-ui-${nuxeo.distribution.version}.zip"
                 includesfile="${outdir}/includes"
                 excludesfile="${outdir}/excludesfile"
-                patternsetid="virtualnav.versus.cap"
-                ignoreContent="false"
-                ignoreContentPattern=".*\.jar$">
+                patternsetid="virtualnav.versus.jsf">
     </nx:zipdiff>
     <unzip src="${outdir}/nxr-${maven.project.version}.zip" dest="${outdir}/marketplace/install">
-      <patternset refid="virtualnav.versus.cap" />
+      <patternset refid="virtualnav.versus.jsf" />
     </unzip>
 
     <!-- Generate install.xml content -->
