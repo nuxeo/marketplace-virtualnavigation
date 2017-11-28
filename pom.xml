@@ -3,14 +3,14 @@
   <parent>
     <groupId>org.nuxeo.ecm.distribution</groupId>
     <artifactId>nuxeo-distribution</artifactId>
-    <version>9.3-SNAPSHOT</version>
+    <version>9.3</version>
   </parent>
 
   <groupId>org.nuxeo.marketplace.virtualnavigation</groupId>
   <artifactId>parent</artifactId>
   <packaging>pom</packaging>
   <name>Virtual Navigation packaging parent POM</name>
-  <version>1.3.2-SNAPSHOT</version>
+  <version>1.3.2</version>
 
   <modules>
     <module>marketplace</module>
