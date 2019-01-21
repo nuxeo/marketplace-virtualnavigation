@@ -10,7 +10,7 @@
   <artifactId>parent</artifactId>
   <packaging>pom</packaging>
   <name>Virtual Navigation packaging parent POM</name>
-  <version>1.4.3</version>
+  <version>1.4.4-SNAPSHOT</version>
 
   <modules>
     <module>marketplace</module>
